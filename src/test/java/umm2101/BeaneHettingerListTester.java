@@ -140,6 +140,7 @@ public class BeaneHettingerListTester {
     {
         list.append(i);
     }
+    assertEquals(20, list.length());
     for(int i = 1; i<= 33;i++)
     {
         list.next();
@@ -151,6 +152,7 @@ public class BeaneHettingerListTester {
         System.out.println(tes.getMessage());
         assertEquals("There isn't an element here", tes.getMessage());
     }
+
     }
 
     @Test
@@ -162,36 +164,54 @@ public class BeaneHettingerListTester {
     {
         list.insert(i);
     }
-    list.append(0);
+    System.out.println(list);
+    assertEquals(20, list.length());
+    list.append(0); 
+    assertEquals(1, list.getValue()); //doesn't work yet, nothing is inserted into list
     list.moveToEnd();
     System.out.println(list);
     assertEquals(21, list.length());
     assertEquals(0,list.getValue());
     }
 
-    @Test
-    public void testInterstThrowExceptionFullList(){
-    // todo: 6a1: add a test for insert that throws an exception because 
-    // the list is already full
-    for (int i = 1; i<=50; i++)
-        {
-            list.insert(i);
-        }
-    try{
-        list.insert(12);
-        //fail("Expected an ListIndexOutOfBoundsException to be thrown"); //fail is not defined in this class
+  @Test 
+  public void testNextPrev(){
+    //tests that next() and prev() move the current position forward, or backwards
+    for (int i = 1; i<=20; i++)
+    {
+        list.insert(i);
     }
-    catch(ListIndexOutOfBoundsException tes){
-        System.out.println(tes.getMessage());
-        assertEquals("List exception on insert - too much stuff!"+
-    " Could not insert item: <" + 12 + "> because the list was already full.", tes.getMessage());
+    assertEquals(0, list.currPos()); //new assertion 1
+    for (int i = 1; i<=5; i++)
+    {
+        list.next();
     }
-    } 
+    assertEquals(5, list.currPos()); // new assertion 2
+    for (int i = 1; i<=2; i++)
+    {
+        list.prev();
+    }
+    assertEquals(3, list.currPos()); //new asserion 3
+  }
+
+  @Test
+  public void testMoveToPos(){
+    //tests that moveToPos moves the current position to desired location
+    for (int i = 1; i<=10; i++)
+    {
+        list.insert(i);
+    }
+    assertEquals(0, list.currPos()); //new assertion 4
+    list.moveToPos(3);
+    assertEquals(3, list.currPos()); //new assertion 5
+  }
   // todo: include some of the tests 
   // that you wrote last week that captured more of the behavior of an integer list
 
   // todo: update your tests to include 5 additional assertions to further verify the 
   // expected behavior (see directions for more details)
+
+
   
 
 
