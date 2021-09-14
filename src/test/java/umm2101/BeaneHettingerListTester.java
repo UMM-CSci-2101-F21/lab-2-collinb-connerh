@@ -35,18 +35,19 @@ public class BeaneHettingerListTester {
   public void testInsertMethod() {
     // Using the logger
     logger.info("There should not be anything in the new list:" + list);
-
     // Check the assertion that the list has nothing
     assertEquals(0, list.length());
+    System.out.println(list);
     // add 20 as the first item in the list (add to an empty list)
     list.insert(20);
     // verify that the list has exactly one item
     assertEquals(1, list.length());
     // Check the assertion that the item is, indeed, 20
+    System.out.println(list);
     assertEquals(20, list.getValue());
     
     // add to the end of a non-empty list
-    list.append(30);
+    // list.append(30);
 
   }
   

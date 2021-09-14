@@ -25,6 +25,10 @@ public class IntListLinkedListBased implements IntegerList {
     // todo: implement insert
     // Insert "it" at current position
     public boolean insert(int it) {
+        Link myLink = new Link(curr.getElement(),curr.getNext());
+        curr.setNext(myLink);
+        curr.setElement(it);
+        numItems++;
         return true;
     }
       
