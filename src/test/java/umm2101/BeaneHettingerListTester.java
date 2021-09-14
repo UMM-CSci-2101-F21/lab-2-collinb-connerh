@@ -3,6 +3,7 @@ package umm2101;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +14,9 @@ import org.junit.jupiter.api.Test;
  * will be called when running the test with JUnit (unless there is some other indication
  * that the test should not be run, such as using the annotation @Disabled).
  */
-public class LambertyListTester {
+public class BeaneHettingerListTester {
 
-  private static final Logger logger = Logger.getLogger(LambertyListTester.class.getName());
+  private static final Logger logger = Logger.getLogger(BeaneHettingerListTester.class.getName());
   
   IntegerList list;
   
@@ -96,6 +97,96 @@ public class LambertyListTester {
     assertEquals(66, list.getValue());
   }
 
+  @Test
+   public void testRemoveAllItems(){
+   // todo: 6d: write a test for removing all the items (clear)
+   for (int i = 1; i<=20; i++)
+    {
+        list.append(i);
+    } 
+   list.clear();
+   assertTrue(list.isEmpty());
+   }
+
+   @Test
+    public void testRemoveException(){
+    // todo: 6c1: write a test that triggers the exception
+    // because the location is too large of a number compared to the number of items in the list
+    for (int i = 1; i<=20; i++)
+    {
+        list.append(i);
+    }
+    for(int i = 1; i<= 25;i++)
+    {
+        list.next();
+    }
+    try{
+        list.remove();
+    }
+    catch(NoSuchElementException tes){
+        System.out.println(tes.getMessage());
+        assertEquals("List exception on remove- position idex out" +
+        " of range of List- current pos <" + 20 + "> and length of list <" + 20 + ">", tes.getMessage()); //current position is only 20 because the next method does
+                                                                                                          //not alow it to go further but still throws exception due
+                                                                                                          //to 0 based index
+    }
+    }
+
+    @Test
+    public void testGetOutOfRange(){
+    // todo: 6b2: write a test to trigger an exception because 
+    // you are asking for an item with a location that is too large of a number given the number of items
+    for (int i = 1; i<=20; i++)
+    {
+        list.append(i);
+    }
+    for(int i = 1; i<= 33;i++)
+    {
+        list.next();
+    }
+    try{
+        list.getValue();
+    }
+    catch(NoSuchElementException tes){
+        System.out.println(tes.getMessage());
+        assertEquals("There isn't an element here", tes.getMessage());
+    }
+    }
+
+    @Test
+    public void testAppend(){
+    // todo: 6a2: One of which appends an item to the end of the list and checks that it worked(taken from instruction doc, different than provided code);;;;;;;;
+                                // add a test for insert that throws an exception because 
+                                // the location is not a possible location since the list only has some smaller number of items
+    for (int i = 1; i<=20; i++)
+    {
+        list.insert(i);
+    }
+    list.append(0);
+    list.moveToEnd();
+    System.out.println(list);
+    assertEquals(21, list.length());
+    assertEquals(0,list.getValue());
+    }
+
+    @Test
+    public void testInterstThrowExceptionFullList(){
+    // todo: 6a1: add a test for insert that throws an exception because 
+    // the list is already full
+    for (int i = 1; i<=50; i++)
+        {
+            list.insert(i);
+        }
+    try{
+        list.insert(12);
+        //fail("Expected an ListIndexOutOfBoundsException to be thrown"); //fail is not defined in this class
+    }
+    catch(ListIndexOutOfBoundsException tes){
+        System.out.println(tes.getMessage());
+        assertEquals("List exception on insert - too much stuff!"+
+    " Could not insert item: <" + 12 + "> because the list was already full.", tes.getMessage());
+    }
+    } 
   // todo: include some of the tests 
   // that you wrote last week that captured more of the behavior of an integer list
 
