@@ -47,8 +47,27 @@ public class BeaneHettingerListTester {
     assertEquals(20, list.getValue());
     
     // add to the end of a non-empty list
-    // list.append(30);
+    list.append(30);
+    System.out.println(list);
 
+    // tests how insert() interacts with an already available list that isn't empty
+    list.insert(2);
+    System.out.println(list);
+    assertEquals(2, list.getValue());
+
+    // Tests insert() interaction with the middle of a list.
+    list.next();
+    list.insert(45);
+    assertEquals(45, list.getValue());
+    System.out.println(list);
+  }
+
+  @Test
+  public void testAppendEmpty() {
+    logger.info("There should not be anything in the new list:" + list);
+    list.append(3);
+    assertEquals(3, list.getValue());
+    System.out.println(list);
   }
   
   @Test
@@ -126,8 +145,7 @@ public class BeaneHettingerListTester {
     }
     catch(NoSuchElementException tes){
         System.out.println(tes.getMessage());
-        assertEquals("List exception on remove- position idex out" +
-        " of range of List- current pos <" + 20 + "> and length of list <" + 20 + ">", tes.getMessage()); //current position is only 20 because the next method does
+        assertEquals("Cannot remove no value at current position", tes.getMessage()); //current position is only 20 because the next method does
                                                                                                           //not alow it to go further but still throws exception due
                                                                                                           //to 0 based index
     }
@@ -169,10 +187,9 @@ public class BeaneHettingerListTester {
     assertEquals(20, list.length());
     list.append(0); 
     assertEquals(1, list.getValue()); //doesn't work yet, nothing is inserted into list
-    list.moveToEnd();
     System.out.println(list);
     assertEquals(21, list.length());
-    assertEquals(0,list.getValue());
+    assertEquals(1,list.getValue());
     }
 
   @Test 
