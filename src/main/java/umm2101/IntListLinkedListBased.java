@@ -10,6 +10,7 @@ public class IntListLinkedListBased implements IntegerList {
     private Link tail;         // Pointer to last element
     private Link curr;         // Access to current element
     private int numItems;      // Number of elements in the list
+    private int i;
     
     // Constructors
     IntListLinkedListBased(int size) { this(); }     // Constructor -- Ignore size
@@ -25,19 +26,52 @@ public class IntListLinkedListBased implements IntegerList {
     // todo: implement insert
     // Insert "it" at current position
     public boolean insert(int it) {
+        if(head.next == tail){
+            Link myLink = new Link(it, tail);
+            head.setNext(myLink);
+            curr = myLink;        // <------ If we don't set current to the only link, assertEquals checks the head/tail which results in a weird error?
+        }else{
+            Link myLink = new Link(curr.getElement(), curr.getNext());
+            curr.setElement(it);
+            curr.setNext(myLink);
+        }
+        numItems++;
         return true;
     }
       
     // todo: implement append
     // Append "it" to list
     public boolean append(int it) {
+        for(i = currPos(); i < numItems - 1; i++){
+            next();
+        }
+        Link myLink = new Link(it, tail);
+        curr.setNext(myLink);
+        numItems++;
+        if(numItems == 1) curr = myLink;           //Handles the case where append is used on an empty list
         return true;
     }
     
     // todo: implement remove
     // Remove and return current element
     public int remove () throws NoSuchElementException {
-        return 0;
+        if(curr == tail){
+            throw new NoSuchElementException("Cannot remove no value at current position");
+        }else{
+            if(numItems == 1){                      //Handles the case where there is only one item in the list
+                int i = curr.getElement();
+                curr = tail = new Link(null);
+                head = new Link(tail);
+                numItems = 0;
+                return i;
+            }else{
+                int i = curr.getElement();
+                curr.setElement(curr.next.getElement());
+                curr.setNext(curr.next.next);
+                numItems--;
+                return i;   
+            }
+        }
     }
     
     public void moveToStart() { curr = head.getNext(); } // Set curr at list start
